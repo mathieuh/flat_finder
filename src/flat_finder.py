@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 
 urls = {
     'seloger': 'http://www.seloger.com/list.htm?idtt=2&naturebien=1,2,4&idtypebien=1,2&ci=330063&tri=d_dt_crea&pxmin=250000&pxmax=450000&surfacemin=80&si_terrasse=1&nb_balconsmin=1',
+    # TODO - Fix pap
     #'pap': 'http://www.pap.fr/annonce/vente-appartement-maison-bordeaux-33-g43588-entre-250000-et-450000-euros-a-partir-de-80-m2',
     'leboncoin': 'https://www.leboncoin.fr/ventes_immobilieres/offres/aquitaine/?th=1&location=Bordeaux%2033000&parrot=0&ps=10&pe=16&sqs=9&ret=1&ret=2',
     'foncia': 'https://fr.foncia.com/achat/bordeaux-33/appartement--maison/(params)/on/(surface_min)/80/(prix_min)/250000/(prix_max)/450000/(balcon)/1',
@@ -46,7 +47,7 @@ def parse_seloger(content):
         ref_id = e['data-listing-id']
         url = e.find('a', class_='listing_link')['href']
         write = True
-        with open('seloger', 'r') as file:
+        with open('db/seloger', 'r') as file:
             for line in file:
                 l = json.loads(line)
                 if l['id'] == ref_id:
@@ -56,7 +57,7 @@ def parse_seloger(content):
             if sent:
                 entries.append({'id': ref_id, 'url': url})
 
-    with open('seloger', 'a+') as file:
+    with open('db/seloger', 'a+') as file:
         file.writelines((json.dumps(l) + '\n' for l in entries))
 
     return entries
@@ -70,7 +71,7 @@ def parse_pap(content):
         ref_id = e.find('a', class_='title-item')['name']
         url = 'http://www.pap.fr/' + e.find('a', class_='title-item')['href']
         write = True
-        with open('pap', 'r') as file:
+        with open('db/pap', 'r') as file:
             for line in file:
                 l = json.loads(line)
                 if l['id'] == ref_id:
@@ -80,7 +81,7 @@ def parse_pap(content):
             if sent:
                 entries.append({'id': ref_id, 'url': url})
 
-    with open('pap', 'a+') as file:
+    with open('db/pap', 'a+') as file:
         file.writelines((json.dumps(l) + '\n' for l in entries))
 
     return entries
@@ -94,7 +95,7 @@ def parse_leboncoin(content):
         infos = json.loads(e.find('a')['data-info'].encode('utf-8'))
         url = 'https:' + e.find('a')['href']
         write = True
-        with open('leboncoin', 'r') as file:
+        with open('db/leboncoin', 'r') as file:
             for line in file:
                 l = json.loads(line)
                 if l['id'] == infos['ad_listid']:
@@ -104,7 +105,7 @@ def parse_leboncoin(content):
             if sent:
                 entries.append({'id': infos['ad_listid'], 'url': url})
 
-    with open('leboncoin', 'a+') as file:
+    with open('db/leboncoin', 'a+') as file:
         file.writelines((json.dumps(l) + '\n' for l in entries))
 
     return entries
@@ -118,7 +119,7 @@ def parse_foncia(content):
         ref_id = e.find('span')['data-reference']
         url = 'https://fr.foncia.com' + e.find('a')['href']
         write = True
-        with open('foncia', 'r') as file:
+        with open('db/foncia', 'r') as file:
             for line in file:
                 l = json.loads(line)
                 if l['id'] == ref_id:
@@ -128,7 +129,7 @@ def parse_foncia(content):
             if sent:
                 entries.append({'id': ref_id, 'url': url})
 
-    with open('foncia', 'a+') as file:
+    with open('db/foncia', 'a+') as file:
         file.writelines((json.dumps(l) + '\n' for l in entries))
 
     return entries
@@ -166,7 +167,7 @@ def parse_logicimmo(content):
         ref_id = e.find('button')['data-offerid']
         url = e.find('p', class_='offer-type').find('a')['href']
         write = True
-        with open('logicimmo', 'r') as file:
+        with open('db/logicimmo', 'r') as file:
             for line in file:
                 l = json.loads(line)
                 if l['id'] == ref_id:
@@ -176,7 +177,7 @@ def parse_logicimmo(content):
             if sent:
                 entries.append({'id': ref_id, 'url': url})
 
-    with open('logicimmo', 'a+') as file:
+    with open('db/logicimmo', 'a+') as file:
         file.writelines((json.dumps(l) + '\n' for l in entries))
 
     return entries

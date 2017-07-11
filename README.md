@@ -6,8 +6,7 @@ Installation
 
 This work with python (https://www.python.org)
 ```
-touch seloger leboncoin logicimmo pap foncia
-python flat_finder
+python src/flat_finder
 ```
 
 ## License
