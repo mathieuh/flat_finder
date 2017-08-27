@@ -43,9 +43,10 @@ def parse_seloger(content):
     entries = []
     page = BeautifulSoup(content, 'html.parser')
     res_section = page.find('section', class_='liste_resultat')
-    for e in res_section.find_all('article'):
+    for e in res_section.find_all('div', class_='c-pa-list'):
         ref_id = e['data-listing-id']
-        url = e.find('a', class_='listing_link')['href']
+        url = e.find('a', class_='c-pa-bu')['href']
+        print(url)
         write = True
         with open('db/seloger', 'r') as file:
             for line in file:
