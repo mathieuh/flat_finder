@@ -46,7 +46,6 @@ def parse_seloger(content):
     for e in res_section.find_all('div', class_='c-pa-list'):
         ref_id = e['data-listing-id']
         url = e.find('a', class_='c-pa-bu')['href']
-        print(url)
         write = True
         with open('db/seloger', 'r') as file:
             for line in file:
